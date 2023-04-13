@@ -41,27 +41,27 @@ class ReformattedData:
     def __repr__(self):
         return f'Python Data: {self.data}'
 
-def main(data: list) -> list:
-    """Main function"""
+    def mask_card(data: list) -> list:
+        """Main function"""
 
-    last_operations = []
-    for dictionary in data:
-        if 'state' in dictionary.keys():
-            if dictionary['state'] == 'EXECUTED':
-                date = dictionary['date'][:10]
-                date = datetime.strptime(date, '%Y-%m-%d')
-                correct_date = date.strftime('%d.%m.%Y')
-                to_where = dictionary['to'].split(' ')
-                if dictionary['description'] != 'Открытие вклада':
-                    card = dictionary['from'].split(' ')
-                    card_number = card[-1]
-                    output = f'{correct_date} {dictionary["description"]}\n' \
-                             f'{" ".join(card[:-1])} {card_number[0:4]} {card_number[4:6]}** **** {card_number[-4:]} -> {"".join(to_where[:-1])} **{to_where[-1][-4:]}\n' \
-                             f'{dictionary["operationAmount"]["amount"]} {dictionary["operationAmount"]["currency"]["name"]}'
-                    last_operations.append(output)
-                else:
-                    output = f'{correct_date} {dictionary["description"]}\n' \
-                             f'{"".join(to_where[:-1])} **{to_where[-1][-4:]}\n' \
-                             f'{dictionary["operationAmount"]["amount"]} {dictionary["operationAmount"]["currency"]["name"]}'
-                    last_operations.append(output)
-    return last_operations
+        last_operations = []
+        for dictionary in data:
+            if 'state' in dictionary.keys():
+                if dictionary['state'] == 'EXECUTED':
+                    date = dictionary['date'][:10]
+                    date = datetime.strptime(date, '%Y-%m-%d')
+                    correct_date = date.strftime('%d.%m.%Y')
+                    to_where = dictionary['to'].split(' ')
+                    if dictionary['description'] != 'Открытие вклада':
+                        card = dictionary['from'].split(' ')
+                        card_number = card[-1]
+                        output = f'{correct_date} {dictionary["description"]}\n' \
+                                 f'{" ".join(card[:-1])} {card_number[0:4]} {card_number[4:6]}** **** {card_number[-4:]} -> {"".join(to_where[:-1])} **{to_where[-1][-4:]}\n' \
+                                 f'{dictionary["operationAmount"]["amount"]} {dictionary["operationAmount"]["currency"]["name"]}'
+                        last_operations.append(output)
+                    else:
+                        output = f'{correct_date} {dictionary["description"]}\n' \
+                                 f'{"".join(to_where[:-1])} **{to_where[-1][-4:]}\n' \
+                                 f'{dictionary["operationAmount"]["amount"]} {dictionary["operationAmount"]["currency"]["name"]}'
+                        last_operations.append(output)
+        return last_operations

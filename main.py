@@ -1,5 +1,5 @@
 #Импорт функций
-from code.utils import Data, ReformattedData, main
+from utils import Data, ReformattedData
 
 #Путь к файлу с данными
 PATH = 'data.json'
@@ -13,7 +13,7 @@ new_text = ReformattedData(text)
 reformatted_text = new_text.reformat_data()
 
 #Финальные данные для вывода
-final_output = main(reformatted_text)[:5]
+final_output = ReformattedData.mask_card(reformatted_text)[:5]
 
 for operation in final_output:
     print(operation)
